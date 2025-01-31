@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mahnoor Aisha - Interactive Love Experience 💖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+    <title>Mahnoor Aisha - Ultimate Love Experience 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ff3366;
-            --secondary-color: #ff99cc;
+            --primary: #ff3366;
+            --secondary: #ff99cc;
             --gold: #ffd700;
+            --shadow: 0 10px 30px rgba(255,51,102,0.2);
         }
 
         * {
@@ -21,14 +22,14 @@
         }
 
         body {
-            background: linear-gradient(135deg, #fff0f5, #ffe6ee);
+            background: linear-gradient(135deg, #fff0f5 30%, #ffe6ee 100%);
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
         }
 
         /* Premium Envelope Design */
-        .envelope-container {
+        .envelope-wrapper {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -36,36 +37,28 @@
             z-index: 1000;
             cursor: pointer;
             transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            filter: drop-shadow(0 10px 30px rgba(255,51,102,0.3));
+            filter: drop-shadow(var(--shadow));
         }
 
         .envelope {
-            width: 320px;
-            height: 220px;
-            background: var(--primary-color);
+            width: 300px;
+            height: 200px;
+            background: var(--primary);
             position: relative;
             clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
-            transition: transform 0.5s;
+            transition: 0.5s transform;
         }
 
-        .envelope:before {
-            content: '💖 Open Me First! 💖';
+        .envelope::before {
+            content: '💌 टैप करके खोलें 💌';
             position: absolute;
-            bottom: -50px;
+            bottom: -60px;
             width: 100%;
             text-align: center;
-            color: var(--primary-color);
-            font-size: 1.3em;
+            color: var(--primary);
+            font-size: 1.2rem;
             font-weight: bold;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .envelope-glow {
-            position: absolute;
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(circle, rgba(255,51,102,0.3) 0%, transparent 70%);
-            animation: glow 2s infinite;
         }
 
         /* Premium Letter Design */
@@ -73,230 +66,220 @@
             max-width: 800px;
             margin: 2rem auto;
             padding: 2.5rem;
-            background: linear-gradient(145deg, #fff5f9, #ffffff);
+            background: linear-gradient(145deg, #fff5f9 0%, #ffffff 100%);
             border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(255,51,102,0.15);
+            box-shadow: var(--shadow);
             opacity: 0;
             transform: scale(0.8);
             transition: all 0.8s ease-out;
             position: relative;
-            border: 2px solid var(--primary-color);
+            border: 3px solid var(--primary);
+            display: none;
         }
 
         .letter-visible {
             opacity: 1;
             transform: scale(1);
+            display: block;
         }
 
         /* Love Games Section */
-        .game-palace {
+        .game-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             margin: 3rem 0;
         }
 
-        /* Game 1: Love Compatibility Meter */
-        .compatibility-game {
-            background: linear-gradient(45deg, #ff3366, #ff6699);
+        /* Game 1: Love Meter */
+        .love-meter {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             padding: 2rem;
             border-radius: 20px;
             text-align: center;
-            position: relative;
+        }
+
+        .meter-bar {
+            height: 30px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 15px;
+            margin: 1.5rem 0;
             overflow: hidden;
         }
 
-        .compatibility-meter {
-            width: 200px;
-            height: 200px;
-            margin: 1rem auto;
-            border-radius: 50%;
-            background: conic-gradient(#ffd700 0%, transparent 0%);
-            position: relative;
-            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        .meter-fill {
+            height: 100%;
+            background: var(--gold);
+            width: 0;
+            transition: 1s width;
         }
 
-        /* Game 2: Memory Puzzle */
-        .memory-puzzle {
-            background: linear-gradient(45deg, #ff99cc, #ff6699);
-            padding: 2rem;
-            border-radius: 20px;
-            position: relative;
-        }
-
-        .puzzle-grid {
+        /* Game 2: Memory Cards */
+        .memory-game {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
-            margin-top: 1rem;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .puzzle-piece {
+        .memory-card {
             aspect-ratio: 1;
-            background: rgba(255,255,255,0.9);
+            background: white;
             border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: transform 0.3s;
-            overflow: hidden;
+            transition: 0.3s transform;
             position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .puzzle-piece img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        /* Game 3: Love Quiz */
-        .love-quiz {
-            background: linear-gradient(45deg, #ff6699, #ff3366);
-            padding: 2rem;
-            border-radius: 20px;
-        }
-
-        .quiz-question {
-            margin: 1rem 0;
-            color: white;
-            font-weight: bold;
+        .memory-card.flipped {
+            transform: rotateY(180deg);
         }
 
         /* Urdu Poetry Design */
         .urdu-poetry {
             font-family: 'Noto Nastaliq Urdu', serif;
-            font-size: 1.6em;
+            font-size: 1.8rem;
             color: #660033;
             margin: 3rem 0;
             text-align: right;
-            line-height: 2.2;
+            line-height: 2.5;
             padding: 2rem;
             background: rgba(255,204,229,0.3);
             border-radius: 20px;
-            border: 2px dashed var(--primary-color);
-        }
-
-        @keyframes glow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+            border: 2px dashed var(--primary);
         }
 
         @media (max-width: 768px) {
             .envelope { width: 250px; height: 170px; }
             .letter-container { padding: 1.5rem; }
-            .game-palace { grid-template-columns: 1fr; }
+            .urdu-poetry { font-size: 1.4rem; }
+            .memory-game { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
-    <div class="envelope-container" onclick="openEnvelope(event)">
-        <div class="envelope-glow"></div>
+    <div class="envelope-wrapper" onclick="openEnvelope()">
         <div class="envelope"></div>
     </div>
 
     <div class="letter-container">
-        <h1 style="text-align:center; color:var(--primary-color); font-family: 'Parisienne'; font-size: 3em; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            My Eternal Love for Mahnoor Aisha 💘
+        <h1 style="text-align:center; color:var(--primary); font-family: 'Dancing Script'; font-size: 3em; margin-bottom:2rem;">
+            मेरी प्यारी महनूर ऐशा को 💘
         </h1>
 
         <div class="urdu-poetry">
-            تیری ہر ادا میں چھپا ہے میرا سکون<br>
+            تیری ہر نظر میں چھپا ہے میرا سکون<br>
             تیرے بغیر ادھوری ہے میری کہانی<br>
             مہنور عایشہ تو ہے میری زندگی کا مقدر<br>
             تیری محبت ہے میری روح کی روانی
         </div>
 
-        <!-- Premium Love Games Section -->
-        <div class="game-palace">
-            <!-- Game 1: Compatibility Meter -->
-            <div class="compatibility-game">
-                <h3 style="color:white;">Our Love Compatibility 🔥</h3>
-                <div class="compatibility-meter" id="compatibilityMeter"></div>
-                <button onclick="calculateCompatibility()" style="background:var(--gold); border:none; padding:0.8rem 2rem; border-radius:30px; cursor:pointer; font-weight:bold;">
-                    Check Compatibility
+        <!-- Interactive Games Section -->
+        <div class="game-section">
+            <!-- Love Meter Game -->
+            <div class="love-meter">
+                <h3 style="color:white;">हमारा प्यार मीटर 💞</h3>
+                <div class="meter-bar">
+                    <div class="meter-fill" id="meterFill"></div>
+                </div>
+                <button onclick="measureLove()" style="background:var(--gold); border:none; padding:1rem 2rem; border-radius:30px; cursor:pointer; font-weight:bold;">
+                    प्यार मापें
                 </button>
             </div>
 
-            <!-- Game 2: Memory Puzzle -->
-            <div class="memory-puzzle">
-                <h3 style="color:white;">Our Memory Puzzle 🧩</h3>
-                <div class="puzzle-grid" id="puzzleGrid"></div>
-            </div>
-
-            <!-- Game 3: Love Quiz -->
-            <div class="love-quiz">
-                <h3 style="color:white;">Love Quiz ❤️</h3>
-                <div class="quiz-question" id="quizQuestion"></div>
-                <div id="quizOptions"></div>
-            </div>
+            <!-- Memory Game -->
+            <div class="memory-game" id="memoryGame"></div>
         </div>
     </div>
 
     <script>
-        // Premium Envelope Opening
-        let envelopeOpened = false;
-        function openEnvelope(e) {
-            if(envelopeOpened) return;
-            envelopeOpened = true;
+        // Envelope Opening Logic
+        let isOpen = false;
+        function openEnvelope() {
+            if(isOpen) return;
+            isOpen = true;
             
-            document.querySelector('.envelope-container').style.transform = 
+            // Animate envelope
+            document.querySelector('.envelope-wrapper').style.transform = 
                 'translate(-50%, -100vh) rotate(720deg) scale(0.5)';
             
-            document.querySelector('.letter-container').classList.add('letter-visible');
-            startGoldenConfetti();
+            // Show letter with delay
+            setTimeout(() => {
+                document.querySelector('.letter-container').classList.add('letter-visible');
+                startConfetti();
+            }, 500);
         }
 
-        // Game 1: Compatibility Meter
-        function calculateCompatibility() {
-            const meter = document.getElementById('compatibilityMeter');
-            const percentage = Math.floor(Math.random() * 20 + 80); // 80-100%
-            meter.style.background = 
-                `conic-gradient(${var(--gold)} ${percentage}%, transparent ${percentage}%)`;
-            
-            createHeartsExplosion();
+        // Love Meter Game
+        function measureLove() {
+            const fill = document.getElementById('meterFill');
+            fill.style.width = `${Math.floor(Math.random()*30 + 70)}%`;
+            createHearts();
         }
 
-        // Game 2: Memory Puzzle
-        const puzzlePieces = Array.from({length: 8}, (_,i) => `https://picsum.photos/200/200?random=${i}`);
-        const puzzleGrid = document.getElementById('puzzleGrid');
+        // Memory Game Logic
+        const symbols = ['❤️', '🌹', '💍', '🎁', '🌸', '💌'];
+        const gameContainer = document.getElementById('memoryGame');
+        let flippedCards = [];
         
-        // Initialize puzzle
-        puzzlePieces.forEach((img, index) => {
-            const piece = document.createElement('div');
-            piece.className = 'puzzle-piece';
-            piece.innerHTML = `<img src="${img}" alt="Puzzle ${index+1}">`;
-            piece.addEventListener('click', () => revealPiece(piece));
-            puzzleGrid.appendChild(piece);
+        // Initialize game
+        symbols.forEach(symbol => {
+            for(let i=0; i<2; i++) {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.innerHTML = `
+                    <div class="front">?</div>
+                    <div class="back">${symbol}</div>
+                `;
+                card.addEventListener('click', () => flipCard(card));
+                gameContainer.appendChild(card);
+            }
         });
 
-        function revealPiece(piece) {
-            piece.querySelector('img').style.opacity = '1';
-            piece.style.transform = 'rotateY(360deg)';
-            setTimeout(() => {
-                piece.querySelector('img').style.opacity = '0';
-                piece.style.transform = 'none';
-            }, 1000);
+        // Shuffle cards
+        Array.from(gameContainer.children).forEach(card => {
+            card.style.order = Math.floor(Math.random() * 12);
+        });
+
+        function flipCard(card) {
+            if(flippedCards.length < 2 && !card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                flippedCards.push(card);
+                
+                if(flippedCards.length === 2) {
+                    setTimeout(checkMatch, 600);
+                }
+            }
         }
 
-        // Game 3: Love Quiz
-        const quizData = [
-            {
-                question: "What's Mahnoor's favorite color?",
-                options: ["Pink", "Red", "Golden", "Blue"],
-                correct: 2
-            },
-            // Add more questions
-        ];
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const symbol1 = card1.querySelector('.back').textContent;
+            const symbol2 = card2.querySelector('.back').textContent;
+            
+            if(symbol1 === symbol2) {
+                card1.style.background = '#99ff99';
+                card2.style.background = '#99ff99';
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+            }
+            flippedCards = [];
+        }
 
-        // Premium Effects
-        function createHeartsExplosion() {
-            for(let i=0; i<50; i++) {
+        // Special Effects
+        function createHearts() {
+            for(let i=0; i<20; i++) {
                 const heart = document.createElement('div');
                 heart.style.position = 'fixed';
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.top = `${Math.random() * 100}%`;
-                heart.style.fontSize = `${20 + Math.random()*30}px`;
-                heart.style.animation = `float ${2 + Math.random()*2}s ease-out`;
+                heart.style.left = `${Math.random()*100}%`;
+                heart.style.top = `${Math.random()*100}%`;
+                heart.style.fontSize = `${25 + Math.random()*30}px`;
+                heart.style.animation = `float ${2 + Math.random()*2}s linear`;
                 heart.innerHTML = '💖';
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 2000);
@@ -309,6 +292,24 @@
             @keyframes float {
                 0% { transform: translateY(0) rotate(0deg); opacity: 1; }
                 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            }
+
+            .memory-card .front,
+            .memory-card .back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 15px;
+            }
+
+            .memory-card .back {
+                transform: rotateY(180deg);
+                background: var(--primary);
+                color: white;
             }
         `;
         document.head.appendChild(style);
