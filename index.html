@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Mahnoor Aisha - Interactive Love Experience 💖</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+  <title>Mahnoor Aisha - Magical Love Experience 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #ff3366;
       --secondary: #ff99cc;
-      --gold: #ffd700;
+      --bg-gradient: linear-gradient(135deg, #ffe6f2, #fff0f5);
+      --card-gradient: linear-gradient(135deg, #ffffff, #ffeef8);
       --shadow: 0 4px 15px rgba(255, 51, 102, 0.2);
+      --text-color: #333;
     }
     * {
       margin: 0;
@@ -19,12 +21,20 @@
       touch-action: manipulation;
     }
     body {
-      font-family: Arial, sans-serif;
-      background: #ffe6f2;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
       min-height: 100vh;
       overflow-x: hidden;
-      text-align: center;
+      position: relative;
       padding-bottom: 40px;
+    }
+    /* Magical confetti canvas overlay */
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 2000;
     }
     /* Envelope Styles */
     .envelope-container {
@@ -37,29 +47,38 @@
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .envelope {
-      width: 250px;
-      height: 180px;
+      width: 280px;
+      height: 200px;
       background: var(--primary);
-      clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
-      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
       border-radius: 10px;
+      position: relative;
+      box-shadow: var(--shadow);
+      animation: pulse 2s infinite;
     }
     .envelope::after {
       content: '💌 Tap to Open 💌';
       position: absolute;
-      bottom: -40px;
+      bottom: -50px;
       width: 100%;
       text-align: center;
-      color: var(--primary);
-      font-weight: bold;
-      font-size: 1.1rem;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     /* Letter Container */
     .letter-container {
       max-width: 1200px;
-      margin: 40px auto;
-      padding: 30px;
-      background: white;
+      width: 95%;
+      margin: 80px auto;
+      padding: 40px 30px;
+      background: var(--card-gradient);
       border-radius: 15px;
       box-shadow: var(--shadow);
       display: none;
@@ -76,40 +95,57 @@
       font-family: 'Great Vibes', cursive;
       color: var(--primary);
       margin-bottom: 30px;
-      font-size: 3rem;
+      font-size: 3.5rem;
+      text-shadow: 0 3px 5px rgba(0,0,0,0.1);
+      text-align: center;
     }
     /* Games Grid & Cards */
     .games-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+      gap: 25px;
       padding: 20px;
     }
     .game-card {
-      background: white;
+      background: #fff;
       padding: 20px;
       border-radius: 15px;
       box-shadow: var(--shadow);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     .game-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: 0 6px 20px rgba(255, 51, 102, 0.25);
     }
-    /* Love Calculator Inputs */
+    .game-card h3 {
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    .game-card input[type="text"],
+    .game-card button {
+      font-family: 'Poppins', sans-serif;
+    }
     .game-card input[type="text"] {
-      width: 80%;
-      padding: 8px;
-      margin: 5px 0;
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
       border: 1px solid #ccc;
       border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .game-card input[type="text"]:focus {
+      border-color: var(--primary);
     }
     .game-card button {
-      padding: 8px 15px;
-      margin-top: 8px;
+      padding: 10px 18px;
+      margin-top: 10px;
       background: var(--primary);
       border: none;
       border-radius: 5px;
-      color: white;
+      color: #fff;
       cursor: pointer;
       transition: background 0.3s ease;
     }
@@ -121,6 +157,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
+      margin-top: 10px;
     }
     .memory-card {
       aspect-ratio: 1;
@@ -129,7 +166,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 2rem;
       cursor: pointer;
       position: relative;
       transform-style: preserve-3d;
@@ -146,14 +183,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 10px;
+    }
+    .memory-card .front {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
     }
     .memory-card .back {
       transform: rotateY(180deg);
+      background: #fff;
+      font-size: 2.2rem;
     }
     /* Heart Slider Styles */
     #sliderTrack {
       height: 50px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.4);
       border-radius: 25px;
       position: relative;
       margin-bottom: 10px;
@@ -161,48 +206,68 @@
     #sliderThumb {
       width: 50px;
       height: 50px;
-      background: white;
+      background: #fff;
       border-radius: 50%;
       position: absolute;
       left: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
     /* Tic Tac Toe Styles */
     #ticTacToe {
       display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-template-rows: repeat(3, 100px);
+      grid-template-columns: repeat(3, 1fr);
       gap: 5px;
       margin: 10px auto;
       max-width: 320px;
+      width: 100%;
     }
     .tic-cell {
       background: #ffe6f2;
       border: 2px solid var(--primary);
-      font-size: 2rem;
+      font-size: 2.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      transition: background 0.3s;
+      padding: 20px;
+      user-select: none;
+    }
+    .tic-cell:hover {
+      background: var(--secondary);
     }
     /* Drawing Board Styles */
     #drawCanvas {
       border: 2px solid var(--primary);
       border-radius: 10px;
       touch-action: none;
+      background: #fff;
+      width: 100%;
+      height: auto;
     }
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .envelope {
-        width: 200px;
-        height: 140px;
+        width: 220px;
+        height: 160px;
+      }
+      .envelope::after {
+        font-size: 1rem;
       }
       h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+      }
+      .tic-cell {
+        font-size: 2rem;
+        padding: 15px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Confetti Canvas Overlay -->
+  <canvas id="confettiCanvas"></canvas>
+
   <!-- Envelope -->
   <div class="envelope-container" onclick="openEnvelope()">
     <div class="envelope"></div>
@@ -264,8 +329,25 @@
       <!-- Drawing Board -->
       <div class="game-card">
         <h3>Draw Your Love 🎨</h3>
+        <!-- Ensure canvas has a fixed aspect ratio -->
         <canvas id="drawCanvas" width="300" height="200"></canvas>
         <button onclick="clearCanvas()">Clear</button>
+      </div>
+
+      <!-- Love Quote Generator -->
+      <div class="game-card">
+        <h3>Love Quote Generator 💬</h3>
+        <button onclick="generateLoveQuote()">Generate Quote</button>
+        <div id="loveQuote"></div>
+      </div>
+
+      <!-- Love Riddle -->
+      <div class="game-card">
+        <h3>Love Riddle 🕵️‍♂️</h3>
+        <p id="riddleQuestion"></p>
+        <input type="text" id="riddleAnswer" placeholder="Your Answer">
+        <button onclick="submitRiddle()">Submit Answer</button>
+        <div id="riddleResult"></div>
       </div>
     </div>
   </div>
@@ -278,7 +360,7 @@
       envelopeOpened = true;
       const envelope = document.querySelector('.envelope-container');
       envelope.style.opacity = '0';
-      envelope.style.transform = 'translate(-50%, -120vh)';
+      envelope.style.transform = 'translate(-50%, -150vh)';
       setTimeout(() => {
         document.getElementById('letterContent').classList.add('letter-visible');
         initializeGames();
@@ -292,6 +374,7 @@
       setupDrawingBoard();
       initializeQuiz();
       initializeTicTacToe();
+      initializeRiddle();
     }
 
     /* ---------- Love Calculator ---------- */
@@ -301,7 +384,7 @@
       let percentage = ((name1.length + name2.length) * 3.14) % 100;
       percentage = Math.max(85, Math.min(percentage, 99));
       document.getElementById('loveResult').innerHTML = `
-        💖 ${percentage}% Match 💖
+        <strong>💖 ${percentage}% Match 💖</strong>
         <div style="height:10px; background:#ffe6f2; margin-top:10px; border-radius:5px;">
           <div style="width:${percentage}%; height:100%; background:var(--primary); border-radius:5px;"></div>
         </div>
@@ -365,7 +448,7 @@
     function startDrag(e) {
       isDragging = true;
       const rect = document.getElementById('sliderTrack').getBoundingClientRect();
-      startX = (e.clientX || e.touches[0].clientX) - rect.left;
+      startX = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
     }
     function drag(e) {
       if (!isDragging) return;
@@ -373,7 +456,7 @@
       const track = document.getElementById('sliderTrack');
       const thumb = document.getElementById('sliderThumb');
       const rect = track.getBoundingClientRect();
-      let newX = (e.clientX || e.touches[0].clientX) - rect.left - startX;
+      let newX = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left - startX;
       newX = Math.max(0, Math.min(newX, track.offsetWidth - thumb.offsetWidth));
       thumb.style.left = newX + 'px';
     }
@@ -391,7 +474,6 @@
     /* ---------- Secret Message Encoder ---------- */
     function encodeMessage() {
       const msg = document.getElementById('secretMessage').value;
-      // Simple Caesar cipher with shift 3 for demonstration
       let encoded = '';
       for (let i = 0; i < msg.length; i++) {
         let ch = msg.charCodeAt(i);
@@ -408,7 +490,7 @@
         answer: "Red"
       },
       {
-        question: "What symbol represents love?",
+        question: "Which symbol represents love?",
         options: ["❤️", "⭐", "🌟", "💔"],
         answer: "❤️"
       }
@@ -421,7 +503,7 @@
         qDiv.style.marginBottom = '10px';
         qDiv.innerHTML = `<p>${q.question}</p>`;
         q.options.forEach(option => {
-          qDiv.innerHTML += `<label style="margin-right:10px;">
+          qDiv.innerHTML += `<label style="margin-right:10px; font-size:0.95rem;">
                                 <input type="radio" name="q${index}" value="${option}"> ${option}
                               </label>`;
         });
@@ -456,6 +538,7 @@
         cell.addEventListener('click', ticTacToeMove);
         boardDiv.appendChild(cell);
       }
+      document.getElementById('ticTacToeResult').textContent = "";
     }
     function ticTacToeMove(e) {
       const index = e.target.dataset.index;
@@ -465,6 +548,7 @@
       if (checkTicTacToeWinner()) {
         document.getElementById('ticTacToeResult').textContent = currentPlayer + " wins!";
         gameActive = false;
+        triggerConfetti(); // magical confetti effect on win
         return;
       }
       if (!ticTacToeBoard.includes("")) {
@@ -490,7 +574,6 @@
       });
     }
     function resetTicTacToe() {
-      document.getElementById('ticTacToeResult').textContent = "";
       initializeTicTacToe();
     }
 
@@ -499,6 +582,7 @@
     let canvas, ctx;
     function setupDrawingBoard() {
       canvas = document.getElementById('drawCanvas');
+      if (!canvas) return;
       ctx = canvas.getContext('2d');
       ctx.lineWidth = 3;
       ctx.strokeStyle = getComputedStyle(document.documentElement)
@@ -509,31 +593,118 @@
       canvas.addEventListener('touchstart', startDrawing);
       canvas.addEventListener('touchmove', draw);
       canvas.addEventListener('touchend', stopDrawing);
+      canvas.addEventListener('touchcancel', stopDrawing);
     }
     function startDrawing(e) {
       isDrawing = true;
       const rect = canvas.getBoundingClientRect();
+      let clientX = e.clientX, clientY = e.clientY;
+      if(e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      }
       ctx.beginPath();
-      ctx.moveTo(
-        (e.clientX || e.touches[0].clientX) - rect.left,
-        (e.clientY || e.touches[0].clientY) - rect.top
-      );
+      ctx.moveTo(clientX - rect.left, clientY - rect.top);
     }
     function draw(e) {
       if (!isDrawing) return;
       e.preventDefault();
       const rect = canvas.getBoundingClientRect();
-      ctx.lineTo(
-        (e.clientX || e.touches[0].clientX) - rect.left,
-        (e.clientY || e.touches[0].clientY) - rect.top
-      );
+      let clientX = e.clientX, clientY = e.clientY;
+      if(e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      }
+      ctx.lineTo(clientX - rect.left, clientY - rect.top);
       ctx.stroke();
     }
     function stopDrawing() {
       isDrawing = false;
     }
     function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if(ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    /* ---------- Love Quote Generator ---------- */
+    function generateLoveQuote() {
+      const quotes = [
+        "You are the sun in my day, the waves in my ocean, the wind in my sky.",
+        "Every moment with you is a beautiful dream come true.",
+        "My heart beats only for you, my love, my everything.",
+        "You light up my world in ways you cannot imagine."
+      ];
+      document.getElementById('loveQuote').textContent =
+        quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    /* ---------- Love Riddle ---------- */
+    const riddleData = {
+      question: "um...my question is...will you be my girl for ever ?",
+      answer: "yes"
+    };
+    function initializeRiddle() {
+      document.getElementById('riddleQuestion').textContent = riddleData.question;
+    }
+    function submitRiddle() {
+      const userAnswer = document.getElementById('riddleAnswer').value.trim().toLowerCase();
+      const correctAnswer = riddleData.answer.trim().toLowerCase();
+      if(userAnswer === correctAnswer) {
+        document.getElementById('riddleResult').textContent = "Correct! You are amazing!";
+      } else {
+        document.getElementById('riddleResult').textContent = "Oops, try again!";
+      }
+    }
+
+    /* ---------- Confetti Effect (Magical UI) ---------- */
+    const confettiCanvas = document.getElementById('confettiCanvas');
+    const confettiCtx = confettiCanvas.getContext('2d');
+    let confettiParticles = [];
+    function resizeConfettiCanvas() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeConfettiCanvas);
+    resizeConfettiCanvas();
+    function triggerConfetti() {
+      confettiParticles = [];
+      const colors = ['#ff3366', '#ff99cc', '#ffd700', '#ff66cc', '#ff6699'];
+      for (let i = 0; i < 150; i++) {
+        confettiParticles.push({
+          x: Math.random() * confettiCanvas.width,
+          y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+          r: Math.random() * 6 + 2,
+          d: Math.random() * 150 + 10,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          tilt: Math.random() * 10 - 10,
+          tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+          tiltAngle: 0
+        });
+      }
+      animateConfetti();
+      setTimeout(() => {
+        confettiParticles = [];
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      }, 4000);
+    }
+    function animateConfetti() {
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      confettiParticles.forEach(p => {
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+        p.x += Math.sin(p.d);
+        p.tilt = Math.sin(p.tiltAngle) * 15;
+        confettiCtx.beginPath();
+        confettiCtx.lineWidth = p.r;
+        confettiCtx.strokeStyle = p.color;
+        confettiCtx.moveTo(p.x + p.tilt + p.r / 3, p.y);
+        confettiCtx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 5);
+        confettiCtx.stroke();
+      });
+      if (confettiParticles.length) {
+        requestAnimationFrame(animateConfetti);
+      }
     }
   </script>
 </body>
